@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Tetris</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Roboto:ital,wght@0,400;0,500;1,700&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+<div id="header">
+    <div class="nav-all">
+        <div class="nav">
+            <pre class="text-header">G    A    M    E        T    E    T    R    I    S</pre>
+        </div>
+    </div>
+
+</div>
+<div id="main">
+    <div class="container">
+        <div class="area-game">
+            <canvas id="tetris_canvas" class="area-game__play" width="620" height="800">
+
+            </canvas>
+            <div class="area-game__button">
+                <div class="button-game save-button">
+                    <span class="button-game__text">SAVE GAME</span>
+                </div>
+                <div class="button-game re-button">
+                    <span class="button-game__text">RESTART GAME</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/jquery-3.6.0.min.js"></script>
+<script src="./Model/Board.js"></script>
+<script src="./Model/Tetris.js"></script>
+<script src="Model/Shapes.js"></script>
+<script src="Model/ShapeBlock.js"></script>
+<!--<script src="Model/EventListener.js"></script>-->
+<script>
+</script>
+</body>
+</html>

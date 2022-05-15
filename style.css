@@ -1,0 +1,78 @@
+* {
+  font-family: "Playfair Display", serif;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#header .nav-all {
+  width: 100%;
+  height: 100px;
+  background-color: #85144b;
+  position: relative;
+}
+#header .nav-all .nav {
+  position: absolute;
+  width: 100%;
+  height: 45%;
+  top: 50%;
+  background: rgb(23, 36, 0);
+  background: linear-gradient(90deg, rgb(23, 36, 0) 0%, rgb(120, 121, 9) 35%, rgb(49, 123, 156) 67%, rgb(0, 212, 255) 100%);
+}
+#header .nav-all .nav .text-header {
+  font-size: 30px;
+  margin: 5px 400px 10px 10px;
+  float: right;
+  font-weight: 600;
+  color: white;
+  text-shadow: 5px 2px #222324, 2px 4px #222324, 3px 5px #222324;
+}
+
+#main .container {
+  background-color: #ccc;
+  height: 1000px;
+}
+#main .container .area-game {
+  display: flex;
+  justify-content: center;
+  padding-top: 3%;
+  padding-left: 12%;
+}
+#main .container .area-game .area-game__play {
+  background-color: #fff;
+  top: 5%;
+  left: 25%;
+}
+#main .container .area-game .area-game__button {
+  margin: 4%;
+  display: flex;
+}
+#main .container .area-game .area-game__button .button-game {
+  background-color: orangered;
+  width: 200px;
+  height: 100px;
+  margin: 40% auto;
+  position: relative;
+  margin-right: 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+#main .container .area-game .area-game__button .button-game.save-game {
+  background-color: #0a58ca;
+}
+#main .container .area-game .area-game__button .button-game.re-button {
+  background-color: #0a58ca;
+}
+#main .container .area-game .area-game__button .button-game .button-game__text {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+/*# sourceMappingURL=style.css.map */
