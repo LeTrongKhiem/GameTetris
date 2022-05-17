@@ -19,7 +19,7 @@ LShape.shapes = [
         [1,1,1]
     ]
 ]
-LShape.color = 'rgb(255,87,34)'
+LShape.color = 'rgb(227,132,103)'
 
 class JShape extends Shapes {}
 JShape.shapes = [
@@ -42,7 +42,7 @@ JShape.shapes = [
         [0,0,2]
     ]
 ]
-JShape.color = 'rgb(63,81,181)'
+JShape.color = 'rgb(111,128,222)'
 
 class OShape extends Shapes {}
 OShape.shapes = [
@@ -63,7 +63,7 @@ OShape.shapes = [
         [3,3]
     ]
 ]
-OShape.color = 'rgb(255,235,59)'
+OShape.color = 'rgb(161,151,62)'
 
 class TShape extends Shapes{}
 TShape.shapes = [
@@ -77,7 +77,7 @@ TShape.shapes = [
         [0,4]
     ],
     [
-        [4,0,4],
+        [0,4,0],
         [4,4,4]
     ],
     [
@@ -137,7 +137,7 @@ ZShape.shapes =
         ]
     ]
 
-ZShape.color = 'rgb(183, 28, 28)'
+ZShape.color = 'rgb(48,186,149)'
 
 class IShape extends  Shapes{}
 IShape.shapes = [
@@ -159,4 +159,4 @@ IShape.shapes = [
         [7,7,7,7]
     ]
 ]
-IShape.color = 'rgb(0, 188, 212)'
+IShape.color = 'rgb(85,154,113)'

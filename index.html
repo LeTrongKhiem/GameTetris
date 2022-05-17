@@ -26,17 +26,18 @@
 
             </canvas>
             <div class="area-game__button">
-                <div class="button-game save-button">
+                <button class="button-game save-button" onclick="saveGame()">
                     <span class="button-game__text">SAVE GAME</span>
-                </div>
-                <div class="button-game re-button">
+                </button>
+                <button class="button-game re-button" id="re_game" onclick="startGame()">
                     <span class="button-game__text">RESTART GAME</span>
-                </div>
+                </button>
 
             </div>
         </div>
     </div>
 </div>
+<div id="footer">19130102 - Lê Trọng Khiêm</div>
 <script src="./js/jquery-3.6.0.min.js"></script>
 <script src="./Model/Board.js"></script>
 <script src="./Model/Tetris.js"></script>

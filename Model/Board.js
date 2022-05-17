@@ -1,4 +1,3 @@
-
 class Board {
     constructor() {
         this.boardWidth = 10;
@@ -9,17 +8,38 @@ class Board {
         //boardcurrent = boardland + currentTetromino
         this.canvas = document.getElementById('tetris_canvas')
         this.ctx = this.canvas.getContext('2d');
-
+        this.gameLoad = null
+        this.end = false;
         this.currentBlock = this.randomBlock()
-
+        this.level = 0
     }
-    //lay context cua canvas
 
-    draw (blockSize = 32, padding = 4) {
-        this.ctx.clearRect(0, 0 , this.canvas.width, this.canvas.height);//xoa trang canvas sau moi khi chay draw
+    //do mau cho cac block
+    changeColor(block) {
+        switch (block) {
+            case 1:
+                return LShape.color
+            case 2:
+                return JShape.color
+            case 3:
+                return OShape.color
+            case 4:
+                return TShape.color
+            case 5:
+                return SShape.color
+            case 6:
+                return ZShape.color
+            case 7:
+                return IShape.color
+
+        }
+    }
+
+    draw(blockSize = 32, padding = 4) {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);//xoa trang canvas sau moi khi chay draw
         this.ctx.lineWidth = 1;
         this.ctx.lineHeight = 3;
-        this.ctx.rect(padding + 120,  padding + 30, blockSize * this.boardWidth + (padding * this.boardWidth + 5), (blockSize * this.boardHeight - 102) + (padding * this.boardHeight - 3 + 1));
+        this.ctx.rect(padding + 120, padding + 30, blockSize * this.boardWidth + (padding * this.boardWidth + 5), (blockSize * this.boardHeight - 102) + (padding * this.boardHeight - 3 + 1));
 
         //
         this.ctx.stroke();
@@ -27,12 +47,12 @@ class Board {
         for (let i = 3; i < this.boardHeight; i++) {//bo 3 o dau
             for (let j = 0; j < this.boardWidth; j++) {
                 if (this.boardCurrent[i][j] !== 0) {
-                    this.ctx.fillStyle = 'rgb(0,0,0)'
+                    this.ctx.fillStyle = this.changeColor(this.boardCurrent[i][j])
                 } else {
                     this.ctx.fillStyle = 'rgb(218,210,210)'
                 }
                 this.ctx.fillRect(padding * 2 + j * (blockSize + padding) + 120,
-                padding * 2 + (i - 3) * (blockSize + padding) + 30, blockSize, blockSize)
+                    padding * 2 + (i - 3) * (blockSize + padding) + 30, blockSize, blockSize)
                 //tinh toan vi tri o nho
             }
         }
@@ -43,22 +63,46 @@ class Board {
         this.ctx.fillText('Điểm số', 500, 300)
         this.ctx.fillText(this.score.toString(), 500, 350)
     }
+
     playGame() {
-        setInterval(() => {
+        this.gameLoad = setInterval(() => {
             this.dropDown()
             this.updateCurrentBoard()
             this.draw()
+            this.levelUp(this.score)
         }, 800)
     }
+    restartGame() {
+        clearInterval(this.playGame())
+        location.reload()
+    }
+    //progress
     dropDown() {
         // this.currentBlock.fall()
-        let nextBlock = new this.currentBlock.constructor(this.currentBlock.row + 1, this.currentBlock.col, this.currentBlock.angle)
-        if (!this.checkBottom(nextBlock) && !this.checkLandBlock(nextBlock)) {
-            this.currentBlock.fall()
-        } else {
-            this.mergeCurrentBlock()
-            this.currentBlock = this.randomBlock()
+            let nextBlock = new this.currentBlock.constructor(this.currentBlock.row + 1, this.currentBlock.col, this.currentBlock.angle)
+            if (!this.checkBottom(nextBlock) && !this.checkLandBlock(nextBlock)) {
+                this.currentBlock.fall()
+            } else {
+                this.mergeCurrentBlock()
+
+                const rows = this.inMatrixRow()
+                this.deleteRow(rows)
+                this.score += this.totalScore(rows.length)
+                if (this.endGame()) {
+                        clearInterval(this.gameLoad)
+                        this.end = true
+                        alert("Game Over")
+                        this.restartGame()
+                }
+                this.currentBlock = this.randomBlock()
+            }
+    }
+    levelUp(score) {
+        if (score < 3 || level == 0) {
+            this.dropDown()
+            level++
         }
+        // alert('win')
     }
     //kt duong bien co vuot qua game hay chua
     checkBottom(block) {
@@ -68,6 +112,7 @@ class Board {
             return false
         }
     }
+
     //kt duong biên voi block da roi xuong
     checkLandBlock(block) {
         for (let i = 0; i < block.height; i++) {
@@ -79,6 +124,7 @@ class Board {
         }
         return false
     }
+
     //gan block vao nhung o da ha canh
     mergeCurrentBlock() {
         for (let i = 0; i < this.currentBlock.height; i++) {
@@ -89,14 +135,75 @@ class Board {
             }
         }
     }
+
     speedMoveDown() {
+        if (this.end)
+            return
         this.dropDown()
         this.updateCurrentBoard()
         this.draw()
     }
 
+    //xu li sang trai phai
+    //trai
+    checkLeft(block) {
+        if (block.col < 0) {
+            return true;
+        }
+        return false;
+    }
+
+    checkRight(block) {
+        if (block.col + block.width > this.boardWidth) {
+            return true
+        }
+        return false
+    }
+
+    //di chuyen khoi
+    moveLeft() {
+        if (this.end)
+            return
+        const blockMove = new this.currentBlock.constructor(this.currentBlock.row, this.currentBlock.col - 1, this.currentBlock.angle)
+        if (!this.checkLeft(blockMove) && !this.checkLandBlock(blockMove)) {
+            this.currentBlock.col -= 1
+            this.updateCurrentBoard()
+            this.draw()
+        }
+    }
+
+    moveRight() {
+        if (this.end)
+            return
+        const blockMove = new this.currentBlock.constructor(this.currentBlock.row, this.currentBlock.col + 1, this.currentBlock.angle)
+        if (!this.checkRight(blockMove) && !this.checkLandBlock(blockMove)) {
+            this.currentBlock.col += 1
+            this.updateCurrentBoard()
+            this.draw()
+        }
+    }
+
+    //xoay block
+    rotating() {
+        if (this.end)
+            return
+        const blockMove = new this.currentBlock.constructor(this.currentBlock.row + 1, this.currentBlock.col, this.currentBlock.angle)
+        blockMove.rotate()
+        if (!this.checkRight(blockMove) && !this.checkLandBlock(blockMove) && !this.checkBottom(blockMove)) {
+            this.currentBlock.rotate()
+            this.updateCurrentBoard()
+            this.draw()
+        }
+    }
+    changeBlock() {
+        if (this.end)
+            return
+        this.currentBlock = this.randomBlock()
+    }
     randomBlock() {
         const randomNumber = Math.floor(Math.random() * Math.floor(7))
+
+        // const randomNumber = 6
         switch (randomNumber) {
             case 0:
                 return new LShape(1, 4)
@@ -114,6 +221,7 @@ class Board {
                 return new IShape(0, 4)
         }
     }
+
     updateCurrentBoard() {
         for (let i = 0; i < this.boardHeight; i++) {
             for (let j = 0; j < this.boardWidth; j++) {
@@ -129,6 +237,44 @@ class Board {
             }
         }
     }
-    //
+
+    //tim va xóa trong cung ma tran
+    inMatrixRow() {
+        const listClear = []
+        this.boardLand.forEach((row, index) => {
+            if (row.every(tile => tile > 0)) {
+                listClear.push(index)
+            }
+        })
+        return listClear
+    }
+
+    //xoa hang co the clear
+    deleteRow(rows) {
+        for (let i = this.boardLand.length - 1; i >= 0; i--) {
+            for (let j = 0; j < rows.length; j++) {
+                if (rows[j] === i) {
+                    this.boardLand.splice(rows[j], 1)
+                }
+            }
+        }
+        for (let i = 0; i < rows.length; i++) {
+            this.boardLand.unshift(new Array(this.boardWidth).fill(0))
+        }
+    }
+
+    //tinh diem
+    totalScore(rows) {
+        return (rows * (rows + 1)) / 2
+    }
+    //check end game
+    endGame() {
+        for (let i = 0; i < this.boardWidth; i++) {
+            if (this.boardLand[2][i] > 0) {
+                return true;
+            }
+        }
+        return false
+    }
 
 }
