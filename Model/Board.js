@@ -35,6 +35,54 @@ class Board {
         }
     }
 
+    playGame() {
+        this.gameLoad = setInterval(() => {
+            this.dropDown()
+            this.updateCurrentBoard()
+            this.draw()
+            // console.log(this.levelUp(this.score))
+            if (this.levelUp() === 1) {
+                setInterval(() => {
+                    this.dropDown()
+                    this.updateCurrentBoard()
+                    this.draw()
+                    console.log(this.levelUp(this.score))
+                },800)
+            }
+            if (this.levelUp() === 2) {
+                setInterval(() => {
+                    this.dropDown()
+                    this.updateCurrentBoard()
+                    this.drawLevel3()
+                    console.log(this.levelUp(this.score))
+                },800)
+            }
+        }, 800)
+    }
+
+    levelUp(score) {
+        var lv = 0;
+        if (score < 3) {
+            lv = 1
+        } else if (this.score >= 3 && this.score <= 10) {
+            lv = 2
+        } else if (this.score > 10 && this.score <= 20) {
+            lv = 3
+        }
+        return lv
+    }
+
+    // levelUpV2(block) {
+    //     var lv = 0
+    //     if (block <= 3) {
+    //         lv = 1
+    //     }
+    //     else if (block > 3 && block <= 10) {
+    //         lv = 2
+    //     }
+    //     return lv
+    // }
+
     draw(blockSize = 32, padding = 4) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);//xoa trang canvas sau moi khi chay draw
         this.ctx.lineWidth = 1;
@@ -61,49 +109,73 @@ class Board {
         this.ctx.fontWeight = '600'
         this.ctx.fillText('Tiếp theo', 500, 80)
         this.ctx.fillText('Điểm số', 500, 300)
+        this.ctx.fillText('Level', 500, 400)
         this.ctx.fillText(this.score.toString(), 500, 350)
+        this.ctx.fillText(this.levelUp(this.score).toString(), 500, 450)
+        // this.ctx.fillText(this.levelUpV2(this.boardCurrent.length).toString(), 500, 450)
     }
 
-    playGame() {
-        this.gameLoad = setInterval(() => {
-            this.dropDown()
-            this.updateCurrentBoard()
-            this.draw()
-            this.levelUp(this.score)
-        }, 800)
+    drawLevel3(blockSize = 32, padding = 4) {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);//xoa trang canvas sau moi khi chay draw
+        this.ctx.lineWidth = 1;
+        this.ctx.lineHeight = 3;
+        // this.ctx.rect(padding + 120, padding + 30, blockSize * this.boardWidth + (padding * this.boardWidth + 5), (blockSize * this.boardHeight - 102) + (padding * this.boardHeight - 3 + 1));
+
+        //
+        this.ctx.stroke();
+        /* Lặp qua các phần tử của mảng board và vẽ các block tại đúng vị trí */
+        for (let i = 3; i < this.boardHeight; i++) {//bo 3 o dau
+            for (let j = 0; j < this.boardWidth; j++) {
+                if (this.boardCurrent[i][j] !== 0) {
+                    this.ctx.fillStyle = this.changeColor(this.boardCurrent[i][j])
+                } else {
+                    this.ctx.fillStyle = 'rgb(218,210,210)'
+                }
+                this.ctx.fillRect(padding * 2 + j * (blockSize + padding) + 120,
+                    padding * 2 + (i - 3) * (blockSize + padding) + 30, blockSize, blockSize)
+                //tinh toan vi tri o nho
+            }
+        }
+        this.ctx.fillStyle = 'rgb(0,0,0)'
+        this.ctx.font = '28px serif'
+        this.ctx.fontWeight = '600'
+        this.ctx.fillText('Tiếp theo', 500, 80)
+        this.ctx.fillText('Điểm số', 500, 300)
+        this.ctx.fillText('Level', 500, 400)
+        this.ctx.fillText(this.score.toString(), 500, 350)
+        this.ctx.fillText(this.levelUp(this.score).toString(), 500, 450)
+        // this.ctx.fillText(this.levelUpV2(this.boardCurrent.length).toString(), 500, 450)
     }
+
     restartGame() {
         clearInterval(this.playGame())
         location.reload()
+        this.levelUp() === 1
     }
+
     //progress
     dropDown() {
         // this.currentBlock.fall()
-            let nextBlock = new this.currentBlock.constructor(this.currentBlock.row + 1, this.currentBlock.col, this.currentBlock.angle)
-            if (!this.checkBottom(nextBlock) && !this.checkLandBlock(nextBlock)) {
-                this.currentBlock.fall()
-            } else {
-                this.mergeCurrentBlock()
+        let nextBlock = new this.currentBlock.constructor(this.currentBlock.row + 1, this.currentBlock.col, this.currentBlock.angle)
+        if (!this.checkBottom(nextBlock) && !this.checkLandBlock(nextBlock)) {
+            this.currentBlock.fall()
+        } else {
+            this.mergeCurrentBlock()
 
-                const rows = this.inMatrixRow()
-                this.deleteRow(rows)
-                this.score += this.totalScore(rows.length)
-                if (this.endGame()) {
-                        clearInterval(this.gameLoad)
-                        this.end = true
-                        alert("Game Over")
-                        this.restartGame()
-                }
-                this.currentBlock = this.randomBlock()
+            const rows = this.inMatrixRow()
+            this.deleteRow(rows)
+            this.score += this.totalScore(rows.length)
+            if (this.endGame()) {
+                clearInterval(this.gameLoad)
+                this.end = true
+                // alert("Game Over")
+                this.restartGame()
             }
-    }
-    levelUp(score) {
-        if (score < 3 || level == 0) {
-            this.dropDown()
-            level++
+            this.currentBlock = this.randomBlock()
         }
-        // alert('win')
     }
+
+
     //kt duong bien co vuot qua game hay chua
     checkBottom(block) {
         if (block.row + block.height > this.boardHeight) {
@@ -195,28 +267,30 @@ class Board {
             this.draw()
         }
     }
+
     changeBlock() {
         if (this.end)
             return
         this.currentBlock = this.randomBlock()
     }
-    randomBlock() {
-        const randomNumber = Math.floor(Math.random() * Math.floor(7))
 
-        // const randomNumber = 6
+    randomBlock() {
+        // const randomNumber = Math.floor(Math.random() * Math.floor(7))
+
+        const randomNumber = 6
         switch (randomNumber) {
-            case 0:
-                return new LShape(1, 4)
-            case 1:
-                return new JShape(1, 4)
-            case 2:
-                return new OShape(2, 4)
-            case 3:
-                return new TShape(2, 4)
-            case 4:
-                return new SShape(2, 4)
-            case 5:
-                return new ZShape(2, 4)
+            // case 0:
+            //     return new LShape(1, 4)
+            // case 1:
+            //     return new JShape(1, 4)
+            // case 2:
+            //     return new OShape(2, 4)
+            // case 3:
+            //     return new TShape(2, 4)
+            // case 4:
+            //     return new SShape(2, 4)
+            // case 5:
+            //     return new ZShape(2, 4)
             case 6:
                 return new IShape(0, 4)
         }
@@ -267,6 +341,7 @@ class Board {
     totalScore(rows) {
         return (rows * (rows + 1)) / 2
     }
+
     //check end game
     endGame() {
         for (let i = 0; i < this.boardWidth; i++) {

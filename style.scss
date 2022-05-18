@@ -45,7 +45,7 @@ body {
     .area-game {
       display: flex;
       justify-content: center;
-      padding-top: 3%;
+      padding-top: 1%;
       padding-left: 12%;
       .area-game__play {
         //width: 550px;
@@ -60,7 +60,7 @@ body {
         display: flex;
 
         .button-game {
-          background-color: orangered;
+          background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
           width: 200px;
           height: 100px;
           margin: 40% auto;
@@ -71,8 +71,13 @@ body {
           align-items: center;
           justify-content: center;
           cursor: pointer;
+          &:hover {
+            cursor: pointer;
+            background: linear-gradient(to bottom, #33ccff 0%, #ffff66 100%);
+          }
           &.save-game {
             background-color: #0a58ca;
+
           }
           &.re-button {
             background-color: #0a58ca;
@@ -80,6 +85,11 @@ body {
           .button-game__text {
             font-size: 25px;
             font-weight: 600;
+            &:hover {
+              color: #fff;
+              padding-left: 15px;
+              transition: all linear 1s;
+            }
           }
         }
       }
@@ -91,6 +101,10 @@ body {
   width: 100%;
   height: 40px;
   text-align: center;
-  margin: 10px;
   background-color: #0c4128;
+  color: #fff;
+  .footer-text {
+    align-items: center;
+    text-align: center;
+  }
 }

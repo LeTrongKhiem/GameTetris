@@ -39,7 +39,7 @@ body {
 #main .container .area-game {
   display: flex;
   justify-content: center;
-  padding-top: 3%;
+  padding-top: 1%;
   padding-left: 12%;
 }
 #main .container .area-game .area-game__play {
@@ -52,7 +52,7 @@ body {
   display: flex;
 }
 #main .container .area-game .area-game__button .button-game {
-  background-color: orangered;
+  background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
   width: 200px;
   height: 100px;
   margin: 40% auto;
@@ -64,6 +64,10 @@ body {
   justify-content: center;
   cursor: pointer;
 }
+#main .container .area-game .area-game__button .button-game:hover {
+  cursor: pointer;
+  background: linear-gradient(to bottom, #33ccff 0%, #ffff66 100%);
+}
 #main .container .area-game .area-game__button .button-game.save-game {
   background-color: #0a58ca;
 }
@@ -74,13 +78,22 @@ body {
   font-size: 25px;
   font-weight: 600;
 }
+#main .container .area-game .area-game__button .button-game .button-game__text:hover {
+  color: #fff;
+  padding-left: 15px;
+  transition: all linear 1s;
+}
 
 #footer {
   width: 100%;
   height: 40px;
   text-align: center;
-  margin: 10px;
   background-color: #0c4128;
+  color: #fff;
+}
+#footer .footer-text {
+  align-items: center;
+  text-align: center;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -4,11 +4,16 @@ class Tetris {
     }
 
 }
+
 function startGame() {
     const board = new Board();
     board.updateCurrentBoard()
-    board.draw()
+    if (board.levelUp() == 1)
+        board.draw()
+    board.drawLevel3()
     board.playGame()
+    // board.levelUp(board.score)
+    // board.levelUpV2(board.boardLand.length)
     $(window).on('keydown', (event) => {
         switch (event.keyCode) {
             case 37:
@@ -24,12 +29,13 @@ function startGame() {
                 board.speedMoveDown()
                 break
             case 13:
-                if (board.score < 10)
-                board.changeBlock()
+                if (board.levelUp() == 1)
+                    board.changeBlock()
                 break
         }
     })
 }
+
 $(document).ready(startGame)
 
 $('#re_game').click(function () {
