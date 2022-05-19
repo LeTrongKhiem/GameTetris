@@ -11,7 +11,7 @@ class Board {
         this.gameLoad = null
         this.end = false;
         this.currentBlock = this.randomBlock()
-        this.level = 0
+        this.level = 1
     }
 
     //do mau cho cac block
@@ -41,36 +41,51 @@ class Board {
             this.updateCurrentBoard()
             this.draw()
             // console.log(this.levelUp(this.score))
-            if (this.levelUp() === 1) {
-                setInterval(() => {
+            console.log(this.score)
+            //level 2
+            if (this.levelUp(this.score) == 2) {
+                clearInterval(this.gameLoad)
+                this.gameLoad = setInterval(() => {
                     this.dropDown()
                     this.updateCurrentBoard()
                     this.draw()
                     console.log(this.levelUp(this.score))
+                    //level 3
+                    if (this.levelUp(this.score) == 3) {
+                        clearInterval(this.gameLoad)
+                        this.gameLoad = setInterval(() => {
+                            this.dropDown()
+                            this.updateCurrentBoard()
+                            this.drawLevel3()
+                            console.log(this.levelUp(this.score))
+                        },750)
+                    }
                 },800)
             }
-            if (this.levelUp() === 2) {
-                setInterval(() => {
-                    this.dropDown()
-                    this.updateCurrentBoard()
-                    this.drawLevel3()
-                    console.log(this.levelUp(this.score))
-                },800)
-            }
-        }, 800)
+        }, 1000)
+        // if (this.levelUp(this.score) == 2) {
+        //     this.gameLoad = setInterval(() => {
+        //         this.dropDown()
+        //         this.updateCurrentBoard()
+        //         this.drawLevel3()
+        //         console.log(this.levelUp(this.score))
+        //     },500)
+        // }
     }
 
     levelUp(score) {
-        var lv = 0;
+
         if (score < 3) {
-            lv = 1
+            this.level = 1
         } else if (this.score >= 3 && this.score <= 10) {
-            lv = 2
+            this.level = 2
         } else if (this.score > 10 && this.score <= 20) {
-            lv = 3
+            this.level = 3
         }
-        return lv
+        return this.level
+        console.log(this.score);
     }
+
 
     // levelUpV2(block) {
     //     var lv = 0
@@ -119,9 +134,8 @@ class Board {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);//xoa trang canvas sau moi khi chay draw
         this.ctx.lineWidth = 1;
         this.ctx.lineHeight = 3;
-        // this.ctx.rect(padding + 120, padding + 30, blockSize * this.boardWidth + (padding * this.boardWidth + 5), (blockSize * this.boardHeight - 102) + (padding * this.boardHeight - 3 + 1));
+        this.ctx.rect(padding + 120, padding + 30, blockSize * this.boardWidth + (padding * this.boardWidth + 5), (blockSize * this.boardHeight - 102) + (padding * this.boardHeight - 3 + 1));
 
-        //
         this.ctx.stroke();
         /* Lặp qua các phần tử của mảng board và vẽ các block tại đúng vị trí */
         for (let i = 3; i < this.boardHeight; i++) {//bo 3 o dau
@@ -129,7 +143,7 @@ class Board {
                 if (this.boardCurrent[i][j] !== 0) {
                     this.ctx.fillStyle = this.changeColor(this.boardCurrent[i][j])
                 } else {
-                    this.ctx.fillStyle = 'rgb(218,210,210)'
+                    this.ctx.fillStyle = 'rgb(255,255,255)'
                 }
                 this.ctx.fillRect(padding * 2 + j * (blockSize + padding) + 120,
                     padding * 2 + (i - 3) * (blockSize + padding) + 30, blockSize, blockSize)
@@ -215,6 +229,14 @@ class Board {
         this.updateCurrentBoard()
         this.draw()
     }
+    //speed move level 3
+    speedMoveDownLevel3() {
+        if (this.end)
+            return
+        this.dropDown()
+        this.updateCurrentBoard()
+        this.drawLevel3()
+    }
 
     //xu li sang trai phai
     //trai
@@ -240,6 +262,8 @@ class Board {
         if (!this.checkLeft(blockMove) && !this.checkLandBlock(blockMove)) {
             this.currentBlock.col -= 1
             this.updateCurrentBoard()
+            if (this.levelUp() == 3)
+                this.drawLevel3()
             this.draw()
         }
     }
@@ -251,6 +275,8 @@ class Board {
         if (!this.checkRight(blockMove) && !this.checkLandBlock(blockMove)) {
             this.currentBlock.col += 1
             this.updateCurrentBoard()
+            if (this.levelUp() == 3)
+                this.drawLevel3()
             this.draw()
         }
     }

@@ -8,11 +8,13 @@ class Tetris {
 function startGame() {
     const board = new Board();
     board.updateCurrentBoard()
-    if (board.levelUp() == 1)
-        board.draw()
+    board.draw()
     board.drawLevel3()
-    board.playGame()
-    // board.levelUp(board.score)
+    // board.playGame()
+    // board.playgameV2()
+
+    board.levelUp(board.score)
+    // requestAnimationFrame(startGame)
     // board.levelUpV2(board.boardLand.length)
     $(window).on('keydown', (event) => {
         switch (event.keyCode) {
@@ -26,12 +28,17 @@ function startGame() {
                 board.moveRight()
                 break
             case 40:
+                if (board.levelUp(board.score) == 3) {
+                    board.speedMoveDownLevel3()
+                    break
+                }
                 board.speedMoveDown()
                 break
             case 13:
-                if (board.levelUp() == 1)
+                if (board.levelUp(board.score) == 1)
                     board.changeBlock()
-                break
+                else
+                    break
         }
     })
 }
