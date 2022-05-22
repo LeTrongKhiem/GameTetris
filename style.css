@@ -141,6 +141,29 @@ body {
   cursor: pointer;
 }
 
+@media only screen and (max-width: 768px) {
+  #header {
+    margin-left: -4%;
+    margin-right: -167%;
+    width: 169%;
+  }
+  #header .nav-all .nav .text-header {
+    margin: 5px 21px 10px 10px;
+  }
+
+  #main {
+    margin-left: 127%;
+  }
+  #main .button-game__text {
+    width: 120px;
+    top: 80%;
+    left: -117%;
+  }
+
+  #footer {
+    display: none;
+  }
+}
 #footer {
   width: 100%;
   height: 40px;

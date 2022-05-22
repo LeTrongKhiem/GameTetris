@@ -164,3 +164,35 @@ IShape.shapes = [
     ]
 ]
 IShape.color = 'rgb(85,154,113)'
+class Barrier1 extends Shapes {}
+Barrier1.shapes = [
+    [8,8,8],
+    [8,8,8],
+    [8,8,8]
+]
+
+class Barrier2 extends Shapes {}
+Barrier2.shapes = [
+    [0,0,9],
+    [0,0,9],
+    [0,0,9],
+    [9,9,9]
+]
+
+class Barrier3 extends Shapes {}
+Barrier3.shapes = [
+    [0,10,0],
+    [10,10,10],
+    [0,10,0]
+]
+
+class Barrier4 extends Shapes {}
+Barrier4.shapes = [
+    [11,11,11,11],
+    [11,11,11,11]
+]
+Barrier1.color = 'rgb(0,0,0)'
+Barrier2.color = 'rgb(0,0,0)'
+Barrier3.color = 'rgb(0,0,0)'
+Barrier4.color = 'rgb(0,0,0)'
+

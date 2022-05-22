@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Tetris</title>
     <link rel="stylesheet" href="./style.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Roboto:ital,wght@0,400;0,500;1,700&display=swap"
           rel="stylesheet">
+
 
 </head>
 <body>
@@ -34,29 +37,45 @@
                 </button>
             </div>
             <div class="tutorial">
-                <button id="myBtn">Mở Modal</button>
+                <button id="myBtn">Hướng dẫn</button>
                 <div id="myModal" class="modal">
                     <!-- Game Tutorial -->
                     <div class="modal-content">
                         <span class="close">&times;</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit sapien dui. Ut
-                            mattis ullamcorper quam, vel egestas sem finibus in. Proin semper fermentum ipsum, sed
-                            sollicitudin neque ultricies a. Ut interdum leo non lobortis feugiat. Etiam laoreet at
-                            libero vel egestas. Nam in dui ac lorem tristique vehicula. Vivamus imperdiet facilisis quam
-                            id tincidunt.</p>
+                        <p>Cách chơi: Dùng các phím điều hướng để di chuyển khối tetris,
+                            phím Enter dùng để chuyển ngẫu nhiên sang khối khác (Level 1)</p>
+                        <p>LEVEL GAME</p>
+                        <ul>
+                            <li>Level 1: Tốc độ chậm, có khung game và có thể đổi ngẫu nhiên sang khối tetris khác</li>
+                            <li>Level 2: Tốc độ nhanh hơi 1 chút..., có khung game và không thể đổi ngẫu nhiên sang khối tetris khác</li>
+                            <li>Level 3: Tốc độ nhanh hơi 1 chút..., có khung game và không thể đổi ngẫu nhiên sang khối tetris khác, nút di chuyển sang trái và phải sẽ bị thay đổi</li>
+                            <li>Level 4: Tốc độ nhanh hơi 1 chút..., độ khó như level 3</li>
+                            <li>Level 5: Tốc độ nhanh hơi 1 chút..., có khung game và có thể đổi ngẫu nhiên sang khối tetris khác</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<audio>
+    <source src="./Audio/tetris-gameboy-01.mp3"></source>
+    <source src="./Audio/tetris-gameboy-02.mp3"></source>
+    <source src="./Audio/tetris-gameboy-03.mp3"></source>
+    <source src="./Audio/tetris-gameboy-04.mp3"></source>
+    <source src="./Audio/tetris-gameboy-05.mp3"></source>
+</audio>
 <div id="footer"><span class="footer-text">19130102 - Lê Trọng Khiêm</span></div>
 <script src="./js/jquery-3.6.0.min.js"></script>
 <script src="./Model/Board.js"></script>
 <script src="./Model/Tetris.js"></script>
 <script src="Model/Shapes.js"></script>
 <script src="Model/ShapeBlock.js"></script>
+<script src="Model/TutorialGame.js"></script>
 <script>
+    // var audio = $("audio")[0];
+    // audio.play();
+    // audio.volume = 0.3
 </script>
 </body>
 </html>

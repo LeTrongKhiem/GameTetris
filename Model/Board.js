@@ -31,7 +31,14 @@ class Board {
                 return ZShape.color
             case 7:
                 return IShape.color
-
+            case 8:
+                return Barrier1.color
+            case 9:
+                return Barrier2.color
+            case 10:
+                return Barrier3.color
+            case 11:
+                return Barrier4.color
         }
     }
 
@@ -58,19 +65,20 @@ class Board {
                             this.updateCurrentBoard()
                             this.drawLevel3()
                             console.log(this.levelUp(this.score))
-                        },750)
+                            if (this.levelUp(this.score) == 4) {
+                                clearInterval(this.gameLoad)
+                                this.gameLoad = setInterval(() => {
+                                    this.dropDown()
+                                    this.updateCurrentBoard()
+                                    this.drawLevel4()
+                                    console.log(this.levelUp(this.score))
+                                },700)
+                            }
+                        },800)
                     }
-                },800)
+                },850)
             }
         }, 1000)
-        // if (this.levelUp(this.score) == 2) {
-        //     this.gameLoad = setInterval(() => {
-        //         this.dropDown()
-        //         this.updateCurrentBoard()
-        //         this.drawLevel3()
-        //         console.log(this.levelUp(this.score))
-        //     },500)
-        // }
     }
 
     levelUp(score) {
@@ -81,7 +89,12 @@ class Board {
             this.level = 2
         } else if (this.score > 10 && this.score <= 20) {
             this.level = 3
-        }
+        } else if (this.score > 20 && this.score <= 40) {
+            this.level = 4;
+        } else if (this.score > 40 && this.score <= 80) {
+            this.level = 5;
+        } else
+            this.level = 6;
         return this.level
         console.log(this.score);
     }
@@ -149,6 +162,42 @@ class Board {
                     padding * 2 + (i - 3) * (blockSize + padding) + 30, blockSize, blockSize)
                 //tinh toan vi tri o nho
             }
+        }
+        this.ctx.fillStyle = 'rgb(0,0,0)'
+        this.ctx.font = '28px serif'
+        this.ctx.fontWeight = '600'
+        this.ctx.fillText('Tiếp theo', 500, 80)
+        this.ctx.fillText('Điểm số', 500, 300)
+        this.ctx.fillText('Level', 500, 400)
+        this.ctx.fillText(this.score.toString(), 500, 350)
+        this.ctx.fillText(this.levelUp(this.score).toString(), 500, 450)
+        // this.ctx.fillText(this.levelUpV2(this.boardCurrent.length).toString(), 500, 450)
+    }
+
+    drawLevel4(blockSize = 32, padding = 4) {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);//xoa trang canvas sau moi khi chay draw
+        this.ctx.lineWidth = 1;
+        this.ctx.lineHeight = 3;
+        this.ctx.rect(padding + 120, padding + 30, blockSize * this.boardWidth + (padding * this.boardWidth + 5), (blockSize * this.boardHeight - 102) + (padding * this.boardHeight - 3 + 1));
+
+        this.ctx.stroke();
+        this.ctx.rect(200, 400, blockSize + 100, blockSize + 100)
+        /* Lặp qua các phần tử của mảng board và vẽ các block tại đúng vị trí */
+        for (let i = 3; i < this.boardHeight; i++) {//bo 3 o dau
+            for (let j = 0; j < this.boardWidth; j++) {
+                if (this.boardCurrent[i][j] !== 0) {
+                    this.ctx.fillStyle = this.changeColor(this.boardCurrent[i][j])
+
+                } else {
+                    this.ctx.fillStyle = 'rgb(208,45,45)'
+                    // this.ctx.fillRect(200, 60, blockSize, blockSize).fillStyle = 'rgb(85,154,113)'
+                }
+                this.ctx.fillRect(padding * 2 + j * (blockSize + padding) + 120,
+                    padding * 2 + (i - 3) * (blockSize + padding) + 30, blockSize, blockSize)
+
+                //tinh toan vi tri o nho
+            }
+
         }
         this.ctx.fillStyle = 'rgb(0,0,0)'
         this.ctx.font = '28px serif'
@@ -238,6 +287,14 @@ class Board {
         this.drawLevel3()
     }
 
+    speedMoveDownLevel4() {
+        if (this.end)
+            return
+        this.dropDown()
+        this.updateCurrentBoard()
+        this.drawLevel4()
+    }v
+
     //xu li sang trai phai
     //trai
     checkLeft(block) {
@@ -262,8 +319,6 @@ class Board {
         if (!this.checkLeft(blockMove) && !this.checkLandBlock(blockMove)) {
             this.currentBlock.col -= 1
             this.updateCurrentBoard()
-            if (this.levelUp() == 3)
-                this.drawLevel3()
             this.draw()
         }
     }
@@ -275,9 +330,29 @@ class Board {
         if (!this.checkRight(blockMove) && !this.checkLandBlock(blockMove)) {
             this.currentBlock.col += 1
             this.updateCurrentBoard()
-            if (this.levelUp() == 3)
-                this.drawLevel3()
             this.draw()
+        }
+    }
+
+    moveLeft3() {
+        if (this.end)
+            return
+        const blockMove = new this.currentBlock.constructor(this.currentBlock.row, this.currentBlock.col - 1, this.currentBlock.angle)
+        if (!this.checkLeft(blockMove) && !this.checkLandBlock(blockMove)) {
+            this.currentBlock.col -= 1
+            this.updateCurrentBoard()
+            this.drawLevel3()
+        }
+    }
+
+    moveRight3() {
+        if (this.end)
+            return
+        const blockMove = new this.currentBlock.constructor(this.currentBlock.row, this.currentBlock.col + 1, this.currentBlock.angle)
+        if (!this.checkRight(blockMove) && !this.checkLandBlock(blockMove)) {
+            this.currentBlock.col += 1
+            this.updateCurrentBoard()
+            this.drawLevel3()
         }
     }
 

@@ -8,10 +8,10 @@ class Tetris {
 function startGame() {
     const board = new Board();
     board.updateCurrentBoard()
-    board.draw()
-    board.drawLevel3()
+    // board.draw()
+    // board.drawLevel3()
+    board.drawLevel4()
     // board.playGame()
-    // board.playgameV2()
 
     board.levelUp(board.score)
     // requestAnimationFrame(startGame)
@@ -19,17 +19,28 @@ function startGame() {
     $(window).on('keydown', (event) => {
         switch (event.keyCode) {
             case 37:
-                board.moveLeft()
+                if (board.levelUp(board.score) <= 2) {
+                    board.moveLeft()
+                    break
+                }
+                board.moveRight()
                 break
             case 38:
                 board.rotating()
                 break
             case 39:
-                board.moveRight()
+                if (board.levelUp(board.score) <= 2) {
+                    board.moveRight()
+                    break
+                }
+                board.moveLeft()
                 break
             case 40:
                 if (board.levelUp(board.score) == 3) {
                     board.speedMoveDownLevel3()
+                    break
+                } else if (board.levelUp(board.score) == 4) {
+                    board.speedMoveDownLevel4()
                     break
                 }
                 board.speedMoveDown()
@@ -49,4 +60,9 @@ $('#re_game').click(function () {
     const board = new Board()
     board.restartGame()
 })
+
+// $("<audio></audio>").attr({
+//     'src':'Audio/tetris-gameboy-01.mp3',
+//     'autoplay':'autoplay'
+// }).prop("volume", 0.2) .appendTo("body");
 

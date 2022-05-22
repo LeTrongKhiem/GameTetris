@@ -2,28 +2,32 @@
   font-family: 'Playfair Display', serif;
   font-family: 'Roboto', sans-serif;
 }
-$header-color : #85144b;
+
+$header-color: #85144b;
 $header-color-child: #39cccc;
-$while-color : #fff;
+$while-color: #fff;
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 #header {
   .nav-all {
     width: 100%;
     height: 70px;
     background-color: $header-color;
     position: relative;
+
     .nav {
       position: absolute;
       //background-color: $header-color-child;
       width: 100%;
       height: 45%;
       top: 50%;
-      background: rgb(23,36,0);
-      background: linear-gradient(90deg, rgba(23,36,0,1) 0%, rgba(120,121,9,1) 35%, rgba(49,123,156,1) 67%, rgba(0,212,255,1) 100%);
+      background: rgb(23, 36, 0);
+      background: linear-gradient(90deg, rgba(23, 36, 0, 1) 0%, rgba(120, 121, 9, 1) 35%, rgba(49, 123, 156, 1) 67%, rgba(0, 212, 255, 1) 100%);
+
       .text-header {
         font-size: 30px;
         margin: 5px 400px 10px 10px;
@@ -42,11 +46,13 @@ body {
   .container {
     background-color: #ccc;
     height: 860px;
+
     .area-game {
       display: flex;
       justify-content: center;
       padding-top: 1%;
       padding-left: 12%;
+
       .area-game__play {
         //width: 550px;
         //height: 750px;
@@ -55,6 +61,7 @@ body {
         top: 5%;
         left: 25%;
       }
+
       .area-game__button {
         margin: 4%;
         display: flex;
@@ -71,20 +78,25 @@ body {
           align-items: center;
           justify-content: center;
           cursor: pointer;
+
           &:hover {
             cursor: pointer;
             background: linear-gradient(to bottom, #33ccff 0%, #ffff66 100%);
           }
+
           &.save-game {
             background-color: #0a58ca;
 
           }
+
           &.re-button {
             background-color: #0a58ca;
           }
+
           .button-game__text {
             font-size: 25px;
             font-weight: 600;
+
             &:hover {
               color: #fff;
               padding-left: 15px;
@@ -96,6 +108,7 @@ body {
     }
   }
 }
+
 //game tutorial
 .tutorial {
   .modal {
@@ -108,9 +121,10 @@ body {
     width: 100%;
     height: 100%;
     overflow: auto; /* thiết lập scroll khi cần thiết */
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
   }
+
   #myBtn {
     background-color: #4CAF50; /* Green */
     border: none;
@@ -124,25 +138,27 @@ body {
     cursor: pointer;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.12),
-    0 2px 2px rgba(0,0,0,0.12),
-    0 4px 4px rgba(0,0,0,0.12),
-    0 8px 8px rgba(0,0,0,0.12),
-    0 16px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
+    0 2px 2px rgba(0, 0, 0, 0.12),
+    0 4px 4px rgba(0, 0, 0, 0.12),
+    0 8px 8px rgba(0, 0, 0, 0.12),
+    0 16px 16px rgba(0, 0, 0, 0.12);
     outline: none;
   }
+
   .modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.12),
-    0 2px 2px rgba(0,0,0,0.12),
-    0 4px 4px rgba(0,0,0,0.12),
-    0 8px 8px rgba(0,0,0,0.12),
-    0 16px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
+    0 2px 2px rgba(0, 0, 0, 0.12),
+    0 4px 4px rgba(0, 0, 0, 0.12),
+    0 8px 8px rgba(0, 0, 0, 0.12),
+    0 16px 16px rgba(0, 0, 0, 0.12);
     border-radius: 25px;
+
     .close {
       color: #aaaaaa;
       float: right;
@@ -159,12 +175,43 @@ body {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  #header {
+    //width: 100%;
+    margin-left: -4%;
+    margin-right: -167%;
+    width: 169%;
+
+    .nav-all {
+      .nav {
+        .text-header {
+          margin: 5px 21px 10px 10px;
+        }
+      }
+    }
+
+
+  }
+  #main {
+    margin-left: 127%;
+    .button-game__text {
+      width: 120px;
+      top: 80%;
+      left: -117%;
+    }
+  }
+  #footer {
+    display: none;
+  }
+}
+
 #footer {
   width: 100%;
   height: 40px;
   text-align: center;
   background-color: #0c4128;
   color: #fff;
+
   .footer-text {
     align-items: center;
     text-align: center;
