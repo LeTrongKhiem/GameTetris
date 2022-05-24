@@ -12,8 +12,56 @@ class Board {
         this.end = false;
         this.currentBlock = this.randomBlock()
         this.level = 1
+        this.nextRandom = -1
+
+        this.displayBlock = document.querySelectorAll('.next-block div')
+        this.displayIndex = 0
     }
 
+    displayShape() {
+        const displayBlock = document.querySelectorAll('.next-block div')
+        const displayIndex = 0
+        const displayW = 4
+        const nextBlock = [
+            [1, displayW + 1, displayW * 2 + 1, 10], //lTetromino
+            [2, displayW + 2, 9, displayW * 2 + 2],//j
+            [5, 6, displayW + 5, displayW + 6], //oTetromino
+            [2, displayW + 1, displayW + 2, displayW + 3], //tTetromino
+            [7,6,10,9], //s
+            [5, 6, 10, 11], //zTetromino
+            [1, displayW + 1, displayW * 2 + 1, displayW * 3 + 1] //iTetromino
+        ]
+        //remove any trace of a tetromino form the entire grid
+        displayBlock.forEach(square => {
+            square.classList.remove('block')
+            square.style.backgroundColor = ''
+        })
+        nextBlock[this.nextRandom].forEach(index => {
+            displayBlock[displayIndex + index].classList.add('block')
+            displayBlock[displayIndex + index].style.backgroundColor = this.changeColor(this.nextRandom + 1)
+        })
+    }
+    randomBlock() {
+        this.nextRandom = Math.floor(Math.random() * Math.floor(7))
+
+        // this.nextRandom = 6
+        switch (this.nextRandom) {
+            case 0:
+                return new LShape(1, 4)
+            case 1:
+                return new JShape(1, 4)
+            case 2:
+                return new OShape(2, 4)
+            case 3:
+                return new TShape(2, 4)
+            case 4:
+                return new SShape(2, 4)
+            case 5:
+                return new ZShape(2, 4)
+            case 6:
+                return new IShape(0, 4)
+        }
+    }
     //do mau cho cac block
     changeColor(block) {
         switch (block) {
@@ -47,15 +95,17 @@ class Board {
             this.dropDown()
             this.updateCurrentBoard()
             this.draw()
+
             // console.log(this.levelUp(this.score))
             console.log(this.score)
             //level 2
-            if (this.levelUp(this.score) == 2) {
+            if (this.levelUp(this.score) <= 2) {
                 clearInterval(this.gameLoad)
                 this.gameLoad = setInterval(() => {
                     this.dropDown()
                     this.updateCurrentBoard()
                     this.draw()
+                    this.displayShape()
                     console.log(this.levelUp(this.score))
                     //level 3
                     if (this.levelUp(this.score) == 3) {
@@ -72,11 +122,11 @@ class Board {
                                     this.updateCurrentBoard()
                                     this.drawLevel4()
                                     console.log(this.levelUp(this.score))
-                                },700)
+                                }, 700)
                             }
-                        },800)
+                        }, 800)
                     }
-                },850)
+                }, 850)
             }
         }, 1000)
     }
@@ -99,18 +149,6 @@ class Board {
         console.log(this.score);
     }
 
-
-    // levelUpV2(block) {
-    //     var lv = 0
-    //     if (block <= 3) {
-    //         lv = 1
-    //     }
-    //     else if (block > 3 && block <= 10) {
-    //         lv = 2
-    //     }
-    //     return lv
-    // }
-
     draw(blockSize = 32, padding = 4) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);//xoa trang canvas sau moi khi chay draw
         this.ctx.lineWidth = 1;
@@ -129,6 +167,40 @@ class Board {
                 }
                 this.ctx.fillRect(padding * 2 + j * (blockSize + padding) + 120,
                     padding * 2 + (i - 3) * (blockSize + padding) + 30, blockSize, blockSize)
+                //tinh toan vi tri o nho
+            }
+        }
+        this.ctx.fillStyle = 'rgb(0,0,0)'
+        this.ctx.font = '28px serif'
+        this.ctx.fontWeight = '600'
+        this.ctx.fillText('Tiếp theo', 500, 80)
+        this.ctx.fillText('Điểm số', 500, 300)
+        this.ctx.fillText('Level', 500, 400)
+        this.ctx.fillText(this.score.toString(), 500, 350)
+        this.ctx.fillText(this.levelUp(this.score).toString(), 500, 450)
+        // this.ctx.fillText(this.levelUpV2(this.boardCurrent.length).toString(), 500, 450)
+    }
+
+
+
+    drawLevel2(blockSize = 32, padding = 4) {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);//xoa trang canvas sau moi khi chay draw
+        this.ctx.lineWidth = 1;
+        this.ctx.lineHeight = 3;
+        this.ctx.rect(padding + 120, padding + 30, blockSize * this.boardWidth + (padding * this.boardWidth + 5), (blockSize * this.boardHeight - 280) + (padding * this.boardHeight - 3 + 1));
+
+        //
+        this.ctx.stroke();
+        /* Lặp qua các phần tử của mảng board và vẽ các block tại đúng vị trí */
+        for (let i = 8; i < this.boardHeight; i++) {//bo 3 o dau
+            for (let j = 0; j < this.boardWidth; j++) {
+                if (this.boardCurrent[i][j] !== 0) {
+                    this.ctx.fillStyle = this.changeColor(this.boardCurrent[i][j])
+                } else {
+                    this.ctx.fillStyle = 'rgb(218,210,210)'
+                }
+                this.ctx.fillRect(padding * 2 + j * (blockSize + padding) + 120,
+                    padding * 2 + (i - 3) * (blockSize + padding) - 150, blockSize, blockSize)
                 //tinh toan vi tri o nho
             }
         }
@@ -187,9 +259,8 @@ class Board {
             for (let j = 0; j < this.boardWidth; j++) {
                 if (this.boardCurrent[i][j] !== 0) {
                     this.ctx.fillStyle = this.changeColor(this.boardCurrent[i][j])
-
                 } else {
-                    this.ctx.fillStyle = 'rgb(208,45,45)'
+                    this.ctx.fillStyle = 'rgb(220,184,184)'
                     // this.ctx.fillRect(200, 60, blockSize, blockSize).fillStyle = 'rgb(85,154,113)'
                 }
                 this.ctx.fillRect(padding * 2 + j * (blockSize + padding) + 120,
@@ -197,7 +268,6 @@ class Board {
 
                 //tinh toan vi tri o nho
             }
-
         }
         this.ctx.fillStyle = 'rgb(0,0,0)'
         this.ctx.font = '28px serif'
@@ -278,6 +348,7 @@ class Board {
         this.updateCurrentBoard()
         this.draw()
     }
+
     //speed move level 3
     speedMoveDownLevel3() {
         if (this.end)
@@ -293,7 +364,9 @@ class Board {
         this.dropDown()
         this.updateCurrentBoard()
         this.drawLevel4()
-    }v
+    }
+
+    v
 
     //xu li sang trai phai
     //trai
@@ -375,27 +448,7 @@ class Board {
         this.currentBlock = this.randomBlock()
     }
 
-    randomBlock() {
-        // const randomNumber = Math.floor(Math.random() * Math.floor(7))
 
-        const randomNumber = 6
-        switch (randomNumber) {
-            // case 0:
-            //     return new LShape(1, 4)
-            // case 1:
-            //     return new JShape(1, 4)
-            // case 2:
-            //     return new OShape(2, 4)
-            // case 3:
-            //     return new TShape(2, 4)
-            // case 4:
-            //     return new SShape(2, 4)
-            // case 5:
-            //     return new ZShape(2, 4)
-            case 6:
-                return new IShape(0, 4)
-        }
-    }
 
     updateCurrentBoard() {
         for (let i = 0; i < this.boardHeight; i++) {

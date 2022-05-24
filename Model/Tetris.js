@@ -4,18 +4,16 @@ class Tetris {
     }
 
 }
-
 function startGame() {
     const board = new Board();
     board.updateCurrentBoard()
-    // board.draw()
+    // board.displayShape()
+    board.draw()
     // board.drawLevel3()
-    board.drawLevel4()
-    // board.playGame()
+    // board.drawLevel4()
+    board.playGame()
 
     board.levelUp(board.score)
-    // requestAnimationFrame(startGame)
-    // board.levelUpV2(board.boardLand.length)
     $(window).on('keydown', (event) => {
         switch (event.keyCode) {
             case 37:

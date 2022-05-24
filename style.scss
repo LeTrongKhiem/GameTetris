@@ -43,6 +43,7 @@ body {
 }
 
 #main {
+
   .container {
     background-color: #ccc;
     height: 860px;
@@ -52,7 +53,24 @@ body {
       justify-content: center;
       padding-top: 1%;
       padding-left: 12%;
-
+      .next-block {
+        width: 120px;
+        height: 120px;
+        background-color: #cdb5b5;
+        margin-top: 5.5%;
+        margin-left: -7.6%;
+        display: flex;
+        flex-wrap: wrap;
+        padding-top: 20px;
+        div {
+          height: 30px;
+          width: 30px;
+          //margin-top: 15px;
+        }
+        .block {
+          background-color: #0a58ca;
+        }
+      }
       .area-game__play {
         //width: 550px;
         //height: 750px;

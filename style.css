@@ -43,6 +43,23 @@ body {
   padding-top: 1%;
   padding-left: 12%;
 }
+#main .container .area-game .next-block {
+  width: 120px;
+  height: 120px;
+  background-color: #cdb5b5;
+  margin-top: 5.5%;
+  margin-left: -7.6%;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+}
+#main .container .area-game .next-block div {
+  height: 30px;
+  width: 30px;
+}
+#main .container .area-game .next-block .block {
+  background-color: #0a58ca;
+}
 #main .container .area-game .area-game__play {
   background-color: #fff;
   top: 5%;
