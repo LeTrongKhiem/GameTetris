@@ -1,4 +1,5 @@
 class Board {
+  //#region Constructor
   constructor() {
     this.boardWidth = 10;
     this.boardHeight = 23;
@@ -16,10 +17,12 @@ class Board {
     this.ctx = this.canvas.getContext("2d");
     this.gameLoad = null;
     this.end = false;
-    this.currentBlock =
-      this.levelUp(this.score) >= 2 && this.checkBoom() <= 3
-        ? this.randomBlockLevel4()
-        : this.randomBlock();
+    this.currentBag = null;
+    this.currentBlock = this.randomBlockV2();
+    this.nextBlock = this.getNextBlock();
+    //   this.levelUp(this.score) >= 2 && this.checkBoom() <= 3
+    //     ? this.randomBlockLevel4()
+    //     : this.randomBlock();
     this.level = 1;
     // this.random = 0
     this.nextRandom = -1;
@@ -27,9 +30,33 @@ class Board {
     this.displayBlock = document.querySelectorAll(".next-block div");
     this.displayIndex = 0;
   }
-  setScoreLevel(level) {
-    this.score = level;
+  //#endregion
+  //use random 7bag
+  mix(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
   }
+  genBlock() {
+    const newBlock = [
+      new LShape(1, 4),
+      new JShape(1, 4),
+      new OShape(2, 4),
+      new TShape(2, 4),
+      new SShape(2, 4),
+      new ZShape(2, 4),
+      new IShape(0, 4),
+    ];
+    return this.mix(newBlock);
+  }
+  getNextBlock() {
+    return this.currentBag[0];
+  }
+  //#region ShowTetrisBlockNext
   displayShape() {
     const displayBlock = document.querySelectorAll(".next-block div");
     const displayIndex = 0;
@@ -48,17 +75,17 @@ class Board {
       square.classList.remove("block");
       square.style.backgroundColor = "";
     });
-    nextBlock[this.nextRandom].forEach((index) => {
+    nextBlock[this.nextBlock].forEach((index) => {
       displayBlock[displayIndex + index].classList.add("block");
       displayBlock[displayIndex + index].style.backgroundColor =
-        this.changeColor(this.nextRandom + 1);
+        this.changeColor(this.nextBlock + 1);
     });
   }
+  //#endregion
   randomBlock() {
-    // this.random = this.nextRandom
-    // this.nextRandom = Math.floor(Math.random() * Math.floor(7))
+    this.nextRandom = Math.floor(Math.random() * Math.floor(7));
 
-    this.nextRandom = 6;
+    // this.nextRandom = 6;
     switch (this.nextRandom) {
       case 0:
         return new LShape(1, 4);
@@ -78,11 +105,22 @@ class Board {
       //     return new Barrier1(2,4)
     }
   }
+  randomBlockV2() {
+    if (this.currentBag === null) {
+      this.currentBag = this.genBlock();
+    }
+    const block = this.currentBag.shift();
+    if (this.currentBag.length === 0) {
+      this.currentBag = this.genBlock();
+    }
+    this.nextBlock = this.getNextBlock();
+    return block;
+  }
   randomBlockLevel4() {
     // this.random = this.nextRandom
-    // this.nextRandom = Math.floor(Math.random() * Math.floor(8))
+    this.nextRandom = Math.floor(Math.random() * Math.floor(9));
 
-    this.nextRandom = 7;
+    // this.nextRandom = 8;
     switch (this.nextRandom) {
       case 0:
         return new LShape(1, 4);
@@ -100,9 +138,11 @@ class Board {
         return new IShape(0, 4);
       case 7:
         return new Barrier1(2, 4);
+      case 8:
+        return new Barrier3(0, 4);
     }
   }
-  //do mau cho cac block
+  //#region do mau cho cac block
   changeColor(block) {
     switch (block) {
       case 1:
@@ -129,6 +169,7 @@ class Board {
         return Barrier4.color;
     }
   }
+  //#endregion
   playGame() {
     this.gameLoad = setInterval(() => {
       this.dropDown();
@@ -193,7 +234,7 @@ class Board {
     return this.level;
     console.log(this.score);
   }
-
+  //#region Draw
   draw(blockSize = 32, padding = 4) {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //xoa trang canvas sau moi khi chay draw
     this.ctx.lineWidth = 1;
@@ -233,9 +274,25 @@ class Board {
     this.ctx.fillText("Level", 500, 400);
     this.ctx.fillText(this.score.toString(), 500, 350);
     this.ctx.fillText(this.levelUp(this.score).toString(), 500, 450);
-    // this.ctx.fillText(this.levelUpV2(this.boardCurrent.length).toString(), 500, 450)
+    // if (this.nextBlock) {
+    //   for (let i = 0; i < this.nextBlock.height; i++) {
+    //     for (let j = 0; j < this.nextBlock.width; j++) {
+    //       if (this.nextBlock.shape[i][j] > 0) {
+    //         this.ctx.fillStyle = this.getColor(this.nextBlock.shape[i][j]);
+    //       } else {
+    //         this.ctx.fillStyle = "rgb(255, 255, 255)";
+    //       }
+    //       this.ctx.fillRect(
+    //         300 + j * padding + j * blockSize,
+    //         50 + i * padding + i * blockSize,
+    //         blockSize,
+    //         blockSize
+    //       );
+    //     }
+    //   }
+    // }
   }
-
+  //#endregion
   drawLevel2(blockSize = 32, padding = 4) {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //xoa trang canvas sau moi khi chay draw
     this.ctx.lineWidth = 1;
@@ -362,14 +419,14 @@ class Board {
     this.ctx.fillText(this.levelUp(this.score).toString(), 500, 450);
     // this.ctx.fillText(this.levelUpV2(this.boardCurrent.length).toString(), 500, 450)
   }
-
+  //#region restartGame
   restartGame() {
     clearInterval(this.playGame());
     location.reload();
     this.levelUp() === 1;
   }
-
-  //progress
+  //#endregion
+  //#region progress
   dropDown() {
     // this.currentBlock.fall()
     let nextBlock = new this.currentBlock.constructor(
@@ -390,13 +447,14 @@ class Board {
         // alert("Game Over")
         this.restartGame();
       }
-      this.currentBlock =
-        this.levelUp(this.score) >= 2 && this.checkBoom() < 4
-          ? this.randomBlockLevel4()
-          : this.randomBlock();
+      this.currentBlock = this.randomBlockV2();
+      // this.levelUp(this.score) >= 2
+      //   ? this.randomBlockLevel4()
+      //   : this.randomBlock();
       // alert(this.checkBoom())
     }
   }
+  //#endregion
   //boom delete
   checkBoom() {
     var count = 0;

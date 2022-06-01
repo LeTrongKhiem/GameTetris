@@ -9,7 +9,7 @@ function startGame() {
   board.draw();
   // board.drawLevel3()
   // board.drawLevel4()
-  // board.playGame()
+  //   board.playGame();
 
   board.levelUp(board.score);
   $(window).on("keydown", (event) => {
