@@ -20,14 +20,8 @@ LShape.shapes = [
   ],
 ];
 LShape.color = "rgb(227,132,103)";
-
 class JShape extends Shapes {}
 JShape.shapes = [
-  [
-    [0, 2],
-    [0, 2],
-    [2, 2],
-  ],
   [
     [2, 0, 0],
     [2, 2, 2],
@@ -36,10 +30,16 @@ JShape.shapes = [
     [2, 2],
     [2, 0],
     [2, 0],
+
   ],
   [
     [2, 2, 2],
     [0, 0, 2],
+  ],
+  [
+    [0, 2],
+    [0, 2],
+    [2, 2],
   ],
 ];
 JShape.color = "rgb(111,128,222)";
@@ -91,6 +91,12 @@ TShape.color = "rgb(156, 39, 176)";
 class SShape extends Shapes {}
 SShape.shapes = [
   [
+    [5, 0],
+    [5, 5],
+    [0, 5],
+
+  ],
+  [
     [0, 5, 5],
     [5, 5, 0],
   ],
@@ -102,11 +108,6 @@ SShape.shapes = [
   [
     [0, 5, 5],
     [5, 5, 0],
-  ],
-  [
-    [5, 0],
-    [5, 5],
-    [0, 5],
   ],
 ];
 SShape.color = "rgb(76, 175, 80)";
