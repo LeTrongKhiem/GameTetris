@@ -43,11 +43,11 @@ class Board {
     genBlock() {
         const newBlock = [
             new LShape(1, 4),
-            new JShape(1, 4),
+            // new JShape(1, 4),
             new OShape(2, 4),
-            new TShape(2, 4),
-            new SShape(2, 4),
-            new ZShape(2, 4),
+            // new TShape(2, 4),
+            // new SShape(2, 4),
+            // new ZShape(2, 4),
             new IShape(0, 4),
         ];
         return this.mix(newBlock);
@@ -124,11 +124,22 @@ class Board {
 
     randomBlockV2() {
         if (this.currentBag === null) {
-            this.currentBag = this.genBlock();
+            if (this.levelUp(this.score) >= 4) {
+                this.currentBag = this.genBlockLevel4();
+            }
+            else {
+                this.currentBag = this.genBlock();
+            }
+
         }
         const block = this.currentBag.shift();
         if (this.currentBag.length === 0) {
-            this.currentBag = this.genBlock();
+            if (this.levelUp(this.score) >= 4) {
+                this.currentBag = this.genBlockLevel4();
+            }
+            else {
+                this.currentBag = this.genBlock();
+            }
         }
         this.nextBlock = this.getNextBlock();
         return block;
@@ -274,23 +285,6 @@ class Board {
         this.ctx.fillText("Level", 500, 400);
         this.ctx.fillText(this.score.toString(), 500, 350);
         this.ctx.fillText(this.levelUp(this.score).toString(), 500, 450);
-        // if (this.nextBlock) {
-        //   for (let i = 0; i < this.nextBlock.height; i++) {
-        //     for (let j = 0; j < this.nextBlock.width; j++) {
-        //       if (this.nextBlock.shape[i][j] > 0) {
-        //         this.ctx.fillStyle = this.getColor(this.nextBlock.shape[i][j]);
-        //       } else {
-        //         this.ctx.fillStyle = "rgb(255, 255, 255)";
-        //       }
-        //       this.ctx.fillRect(
-        //         300 + j * padding + j * blockSize,
-        //         50 + i * padding + i * blockSize,
-        //         blockSize,
-        //         blockSize
-        //       );
-        //     }
-        //   }
-        // }
     }
 
     //#endregion
@@ -389,7 +383,7 @@ class Board {
         );
 
         this.ctx.stroke();
-        this.ctx.rect(200, 400, blockSize + 100, blockSize + 100);
+        // this.ctx.rect(200, 400, blockSize + 100, blockSize + 100);
         /* Lặp qua các phần tử của mảng board và vẽ các block tại đúng vị trí */
         for (let i = 3; i < this.boardHeight; i++) {
             //bo 3 o dau

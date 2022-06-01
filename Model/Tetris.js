@@ -15,7 +15,7 @@ function startGame() {
   $(window).on("keydown", (event) => {
     switch (event.keyCode) {
       case 37:
-        if (board.levelUp(board.score) == 3) {
+        if (board.levelUp(board.score) == 4) {
           board.moveRight();
           break;
         }
@@ -26,17 +26,17 @@ function startGame() {
         board.rotating();
         break;
       case 39:
-        if (board.levelUp(board.score) == 3) {
+        if (board.levelUp(board.score) == 4) {
           board.moveLeft();
           break;
         }
         board.moveRight();
         break;
       case 40:
-        if (board.levelUp(board.score) == 3) {
+        if (board.levelUp(board.score) == 4) {
           board.speedMoveDownLevel3();
           break;
-        } else if (board.levelUp(board.score) == 4) {
+        } else if (board.levelUp(board.score) == 5) {
           board.speedMoveDownLevel4();
           break;
         }
@@ -71,7 +71,7 @@ $("#pause_game").click(function () {
   if (pause == false) {
     //Didn't click on OK
     var options = confirm(
-      "Click on 'Ok' to not change brigthness, but the other one to change the brightness to a random value"
+      "Chọn Ok để restart game"
     );
 
     if (options == true) {
