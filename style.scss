@@ -1,5 +1,5 @@
 * {
-  font-family: 'Playfair Display', serif;
+  //font-family: 'Playfair Display', serif;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -46,7 +46,7 @@ body {
 
   .container {
     background-color: #ccc;
-    height: 860px;
+    height: 100%;
 
     .area-game {
       display: flex;
@@ -122,7 +122,46 @@ body {
             }
           }
         }
+        .custome-select{
+          background-color:#DDD;
+          position:relative;
+          width:180px;
+          height:70px;
+          z-index:3;
+          top: 55%;
+          right: 65%;
+          select{
+            background:transparent;
+            border:none;
+            width:100%;
+            height:100%;
+            font-size:22px;
+            z-index:2;
+            padding:0 10px;
+            position : relative;
+            -webkit-appearance:none;
+            -moz-appearance:none;
+            appearance:none;
+            &:hover{
+              cursor:pointer;
+            }
+          }
+          &:after{
+            content: '\25bc';
+            font-size:25px;
+            width:50px;
+            height:30px;
+            position : absolute;
+            background-color:#FF8080;
+            z-index:1;
+            right:20px;
+            top:20px;
+            text-align:center;
+
+          }
+        }
       }
+
     }
   }
 }

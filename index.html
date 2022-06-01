@@ -47,13 +47,24 @@
                 <div></div>
             </div>
             <div class="area-game__button">
-                <button class="button-game save-button" onclick="saveGame()">
-                    <span class="button-game__text">SAVE GAME</span>
+                <button class="button-game save-button" id="pause_game" onclick="pause()">
+                    <span class="button-game__text">PAUSE GAME</span>
                 </button>
                 <button class="button-game re-button" id="re_game" onclick="startGame()">
                     <span class="button-game__text">RESTART GAME</span>
                 </button>
+                <div class="custome-select">
+                    <select id="select-level">
+                        <option id="level1" value="1">Level 1 </option>
+                        <option id="level2" value="2">Level 2 </option>
+                        <option>Level 3 </option>
+                        <option>Level 4 </option>
+                        <option>Level 5 </option>
+                        <option>Level 6 </option>
+                    </select>
+                </div>
             </div>
+
             <div class="tutorial">
                 <button id="myBtn">Hướng dẫn</button>
                 <div id="myModal" class="modal">

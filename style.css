@@ -1,6 +1,5 @@
 @charset "UTF-8";
 * {
-  font-family: "Playfair Display", serif;
   font-family: "Roboto", sans-serif;
 }
 
@@ -35,7 +34,7 @@ body {
 
 #main .container {
   background-color: #ccc;
-  height: 860px;
+  height: 100%;
 }
 #main .container .area-game {
   display: flex;
@@ -100,6 +99,43 @@ body {
   color: #fff;
   padding-left: 15px;
   transition: all linear 1s;
+}
+#main .container .area-game .area-game__button .custome-select {
+  background-color: #DDD;
+  position: relative;
+  width: 180px;
+  height: 70px;
+  z-index: 3;
+  top: 55%;
+  right: 65%;
+}
+#main .container .area-game .area-game__button .custome-select select {
+  background: transparent;
+  border: none;
+  width: 100%;
+  height: 100%;
+  font-size: 22px;
+  z-index: 2;
+  padding: 0 10px;
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+#main .container .area-game .area-game__button .custome-select select:hover {
+  cursor: pointer;
+}
+#main .container .area-game .area-game__button .custome-select:after {
+  content: "▼";
+  font-size: 25px;
+  width: 50px;
+  height: 30px;
+  position: absolute;
+  background-color: #FF8080;
+  z-index: 1;
+  right: 20px;
+  top: 20px;
+  text-align: center;
 }
 
 .tutorial .modal {

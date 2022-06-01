@@ -2,7 +2,6 @@ class Tetris {
     //ES6
     constructor() {
     }
-
 }
 function startGame() {
     const board = new Board();
@@ -17,21 +16,22 @@ function startGame() {
     $(window).on('keydown', (event) => {
         switch (event.keyCode) {
             case 37:
-                if (board.levelUp(board.score) <= 2) {
-                    board.moveLeft()
+                if (board.levelUp(board.score) == 3) {
+                    board.moveRight()
                     break
                 }
-                board.moveRight()
+                board.moveLeft()
+
                 break
             case 38:
                 board.rotating()
                 break
             case 39:
-                if (board.levelUp(board.score) <= 2) {
-                    board.moveRight()
+                if (board.levelUp(board.score) == 3) {
+                    board.moveLeft()
                     break
                 }
-                board.moveLeft()
+                board.moveRight()
                 break
             case 40:
                 if (board.levelUp(board.score) == 3) {
@@ -53,10 +53,38 @@ function startGame() {
 }
 
 $(document).ready(startGame)
-
 $('#re_game').click(function () {
     const board = new Board()
     board.restartGame()
+})
+$('#select-level').change(function () {
+    const board = new Board()
+    if ($(this).val() == 1) {
+        alert('level 1')
+    }
+    if ($(this).val() == 2) {
+        alert('level 2')
+    }
+})
+
+$('#pause_game').click(function () {
+    var gameBrightness = 10;
+    var pause = confirm("Bạn tạm dừng game. Bấm Ok để tiếp tục");
+
+    if (pause == false) { //Didn't click on OK
+        var options = confirm("Click on 'Ok' to not change brigthness, but the other one to change the brightness to a random value");
+
+        if (options == true) { //Clicked on OK
+            ReDopause();
+            return;
+        }
+        else { //Didn't click on OK
+            brightness = Math.floor(Math.random() * 20);
+            document.getElementById("brightness").innerHTML = brightness;
+            ReDopause();
+            return;
+        }
+    }
 })
 
 // $("<audio></audio>").attr({
