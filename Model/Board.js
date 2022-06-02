@@ -53,12 +53,12 @@ class Board {
 
     genBlock() {
         const newBlock = [
-            new LShape(1, 4),
-            new JShape(1, 4),
-            new OShape(2, 4),
-            new TShape(2, 4),
-            new SShape(2, 4),
-            new ZShape(2, 4),
+            // new LShape(1, 4),
+            // new JShape(1, 4),
+            // new OShape(2, 4),
+            // new TShape(2, 4),
+            // new SShape(2, 4),
+            // new ZShape(2, 4),
             new IShape(0, 4),
         ];
         return this.mix(newBlock);
@@ -67,13 +67,13 @@ class Board {
         const newBlock = [
             new LShape(1, 4),
             new JShape(1, 4),
-            new OShape(2, 4),
-            new TShape(2, 4),
-            new SShape(2, 4),
-            new ZShape(2, 4),
+            // new OShape(2, 4),
+            // new TShape(2, 4),
+            // new SShape(2, 4),
+            // new ZShape(2, 4),
             new IShape(0, 4),
             new Barrier1(0, 4),
-            new Barrier3(1,4)
+            // new Barrier3(1,4)
         ];
         return this.mix(newBlock);
     }
@@ -251,17 +251,17 @@ class Board {
     }
 
     levelUp(score) {
-        if (score < 10) {
+        if (score < 3) {
             this.level = 1;
-        } else if (this.score >= 10 && this.score <= 25) {
+        } else if (this.score >= 3 && this.score <= 10) {
             this.level = 2;
-        } else if (this.score > 25 && this.score <= 40) {
+        } else if (this.score > 10 && this.score <= 20) {
             this.level = 3;
-        } else if (this.score > 40 && this.score <= 60) {
+        } else if (this.score > 20 && this.score <= 30) {
             this.level = 4;
-        } else if (this.score > 60 && this.score <= 80) {
+        } else if (this.score > 30 && this.score <= 40) {
             this.level = 5;
-        } else if (this.score > 80) {
+        } else if (this.score > 40) {
             this.level = 6;
         }
         return this.level;
