@@ -507,7 +507,7 @@ class Board {
             if (this.endGame()) {
                 clearInterval(this.gameLoad);
                 this.end = true;
-                // alert("Game Over")
+                alert("Game Over")
                 this.restartGame();
             }
             this.currentBlock = this.randomBlockV2();
