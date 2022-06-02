@@ -132,7 +132,7 @@ body {
   height: 30px;
   position: absolute;
   background-color: #FF8080;
-  z-index: 1;
+  z-index: 2;
   right: 20px;
   top: 20px;
   text-align: center;
@@ -142,7 +142,7 @@ body {
   display: none;
   /* Ẩn Mặc Định */
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   padding-top: 100px;
   /* Vị trí của modal */
   left: 0;

@@ -26,8 +26,19 @@ class Board {
 
         this.displayBlock = document.querySelectorAll(".next-block div");
         this.displayIndex = 0;
+        this.selectGame = document.getElementById("select-level").value
     }
-
+    selectGameV() {
+       if (this.selectGame == 1) {
+           this.score = 1
+           alert('level1')
+       } else
+       if (this.selectGame == 2) {
+           this.score += 10
+           alert('level2')
+       }
+       return this.score
+    }
     //#endregion
     //use random 7bag
     mix(array) {
@@ -42,9 +53,9 @@ class Board {
 
     genBlock() {
         const newBlock = [
-            new LShape(1, 4),
+            // new LShape(1, 4),
             // new JShape(1, 4),
-            new OShape(2, 4),
+            // new OShape(2, 4),
             // new TShape(2, 4),
             // new SShape(2, 4),
             // new ZShape(2, 4),
@@ -124,7 +135,7 @@ class Board {
 
     randomBlockV2() {
         if (this.currentBag === null) {
-            if (this.levelUp(this.score) >= 4) {
+            if (this.levelUp(this.score) >= 5) {
                 this.currentBag = this.genBlockLevel4();
             }
             else {
@@ -134,7 +145,7 @@ class Board {
         }
         const block = this.currentBag.shift();
         if (this.currentBag.length === 0) {
-            if (this.levelUp(this.score) >= 4) {
+            if (this.levelUp(this.score) >= 5) {
                 this.currentBag = this.genBlockLevel4();
             }
             else {
@@ -218,6 +229,15 @@ class Board {
                                             this.updateCurrentBoard();
                                             this.drawLevel4();
                                             console.log(this.levelUp(this.score));
+                                            if (this.levelUp(this.score) == 6) {
+                                                clearInterval(this.gameLoad);
+                                                this.gameLoad = setInterval(() => {
+                                                    this.dropDown();
+                                                    this.updateCurrentBoard();
+                                                    this.drawLevel4();
+                                                    console.log(this.levelUp(this.score));
+                                                }, 400);
+                                            }
                                         }, 600);
                                     }
                                 }, 700);
@@ -236,9 +256,9 @@ class Board {
             this.level = 2;
         } else if (this.score > 10 && this.score <= 20) {
             this.level = 3;
-        } else if (this.score > 20 && this.score <= 40) {
+        } else if (this.score > 20 && this.score <= 30) {
             this.level = 4;
-        } else if (this.score > 40 && this.score <= 80) {
+        } else if (this.score > 30 && this.score <= 40) {
             this.level = 5;
         } else this.level = 6;
         return this.level;
@@ -438,6 +458,7 @@ class Board {
             const rows = this.inMatrixRow();
             this.deleteRow(rows);
             this.score += this.totalScore(rows.length);
+            // this.score = this.selectGameV()
             if (this.endGame()) {
                 clearInterval(this.gameLoad);
                 this.end = true;

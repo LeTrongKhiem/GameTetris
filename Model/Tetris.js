@@ -1,6 +1,8 @@
 class Tetris {
   //ES6
-  constructor() {}
+  constructor() {
+  }
+
 }
 function startGame() {
   const board = new Board();
@@ -20,7 +22,6 @@ function startGame() {
           break;
         }
         board.moveLeft();
-
         break;
       case 38:
         board.rotating();
@@ -54,15 +55,17 @@ $("#re_game").click(function () {
   const board = new Board();
   board.restartGame();
 });
-$("#select-level").change(function () {
-  const board = new Board();
-  if ($(this).val() == 1) {
-    alert("level 1");
-  }
-  if ($(this).val() == 2) {
-    alert("level 2");
-  }
-});
+  // $("#select-level").change(function () {
+  //   const board = new Board();
+  //   if ($(this).val() == 1) {
+  //     alert("level 1");
+  //     return 1
+  //   }
+  //   if ($(this).val() == 2) {
+  //     alert("level 2");
+  //     return 20
+  //   }
+  // });
 
 $("#pause_game").click(function () {
   var gameBrightness = 10;
@@ -87,8 +90,7 @@ $("#pause_game").click(function () {
     }
   }
 });
-
 // $("<audio></audio>").attr({
-//     'src':'Audio/tetris-gameboy-01.mp3',
-//     'autoplay':'autoplay'
+//   'src':'Audio/tetris-gameboy-01.mp3',
+//   'autoplay':'autoplay'
 // }).prop("volume", 0.2) .appendTo("body");
