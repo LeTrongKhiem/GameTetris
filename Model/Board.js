@@ -53,12 +53,12 @@ class Board {
 
     genBlock() {
         const newBlock = [
-            // new LShape(1, 4),
-            // new JShape(1, 4),
-            // new OShape(2, 4),
-            // new TShape(2, 4),
-            // new SShape(2, 4),
-            // new ZShape(2, 4),
+            new LShape(1, 4),
+            new JShape(1, 4),
+            new OShape(2, 4),
+            new TShape(2, 4),
+            new SShape(2, 4),
+            new ZShape(2, 4),
             new IShape(0, 4),
         ];
         return this.mix(newBlock);
@@ -235,6 +235,7 @@ class Board {
                                                     this.dropDown();
                                                     this.updateCurrentBoard();
                                                     this.drawLevel4();
+                                                    this.canvas.style = 'transform: rotate(90deg)'
                                                     console.log(this.levelUp(this.score));
                                                 }, 400);
                                             }
@@ -250,17 +251,19 @@ class Board {
     }
 
     levelUp(score) {
-        if (score < 3) {
+        if (score < 10) {
             this.level = 1;
-        } else if (this.score >= 3 && this.score <= 10) {
+        } else if (this.score >= 10 && this.score <= 25) {
             this.level = 2;
-        } else if (this.score > 10 && this.score <= 20) {
+        } else if (this.score > 25 && this.score <= 40) {
             this.level = 3;
-        } else if (this.score > 20 && this.score <= 30) {
+        } else if (this.score > 40 && this.score <= 60) {
             this.level = 4;
-        } else if (this.score > 30 && this.score <= 40) {
+        } else if (this.score > 60 && this.score <= 80) {
             this.level = 5;
-        } else this.level = 6;
+        } else if (this.score > 80) {
+            this.level = 6;
+        }
         return this.level;
         console.log(this.score);
     }
@@ -434,7 +437,49 @@ class Board {
         this.ctx.fillText(this.levelUp(this.score).toString(), 500, 450);
         // this.ctx.fillText(this.levelUpV2(this.boardCurrent.length).toString(), 500, 450)
     }
+    drawLevel6(blockSize = 32, padding = 4) {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //xoa trang canvas sau moi khi chay draw
+        this.ctx.lineWidth = 1;
+        this.ctx.lineHeight = 3;
+        this.ctx.rect(
+            padding + 120,
+            padding + 30,
+            blockSize * this.boardWidth + (padding * this.boardWidth + 5),
+            blockSize * this.boardHeight - 102 + (padding * this.boardHeight - 3 + 1)
+        );
 
+        this.ctx.stroke();
+        // this.ctx.rect(200, 400, blockSize + 100, blockSize + 100);
+        /* Lặp qua các phần tử của mảng board và vẽ các block tại đúng vị trí */
+        for (let i = 3; i < this.boardHeight; i++) {
+            //bo 3 o dau
+            for (let j = 0; j < this.boardWidth; j++) {
+                if (this.boardCurrent[i][j] !== 0) {
+                    this.ctx.fillStyle = this.changeColor(this.boardCurrent[i][j]);
+                } else {
+                    this.ctx.fillStyle = "rgb(255,255,255)";
+                    // this.ctx.fillRect(200, 60, blockSize, blockSize).fillStyle = 'rgb(85,154,113)'
+                }
+                this.ctx.fillRect(
+                    padding * 2 + j * (blockSize + padding) + 120,
+                    padding * 2 + (i - 3) * (blockSize + padding) + 30,
+                    blockSize,
+                    blockSize
+                );
+
+                //tinh toan vi tri o nho
+            }
+        }
+        this.ctx.fillStyle = "rgb(0,0,0)";
+        this.ctx.font = "28px serif";
+        this.ctx.fontWeight = "600";
+        this.ctx.fillText("Tiếp theo", 500, 80);
+        this.ctx.fillText("Điểm số", 500, 300);
+        this.ctx.fillText("Level", 500, 400);
+        this.ctx.fillText(this.score.toString(), 500, 350);
+        this.ctx.fillText(this.levelUp(this.score).toString(), 500, 450);
+        // this.ctx.fillText(this.levelUpV2(this.boardCurrent.length).toString(), 500, 450)
+    }
     //#region restartGame
     restartGame() {
         clearInterval(this.playGame());

@@ -9,15 +9,13 @@ function startGame() {
   board.updateCurrentBoard();
   // board.displayShape()
   board.draw();
-  // board.drawLevel3()
-  // board.drawLevel4()
-    board.playGame();
-
+  board.playGame();
+  // console.log(board.levelUp(board.score))
   board.levelUp(board.score);
   $(window).on("keydown", (event) => {
     switch (event.keyCode) {
       case 37:
-        if (board.levelUp(board.score) == 4) {
+        if (board.levelUp(board.score) == 4 || board.levelUp(board.score) == 6) {
           board.moveRight();
           break;
         }
@@ -27,7 +25,7 @@ function startGame() {
         board.rotating();
         break;
       case 39:
-        if (board.levelUp(board.score) == 4) {
+        if (board.levelUp(board.score) == 4 || board.levelUp(board.score) == 6) {
           board.moveLeft();
           break;
         }
